@@ -38,7 +38,7 @@ struct StartupInformation
 class IActivationService
 {
 public:
-   virtual const ServiceStatus Start() = 0;
+   virtual ServiceStatus Start() = 0;
 
    virtual void Stop() = 0;
 };

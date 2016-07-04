@@ -33,16 +33,16 @@
 #include "FileManager.h"
 
 namespace ultraschall {
-  namespace reaper {
-    
-    const std::string QueryPluginVersion()
-    {
+namespace reaper {
+
+std::string QueryPluginVersion()
+{
 #ifdef WIN32
-      const std::string path = FileManager::ProgramFilesDirectory() + "\\REAPER (x64)\\Plugins\\reaper_ultraschall.dll";
-      return FileManager::ReadVersionFromFile(path);
+   const std::string path = FileManager::ProgramFilesDirectory() + "\\REAPER (x64)\\Plugins\\reaper_ultraschall.dll";
+   return FileManager::ReadVersionFromFile(path);
 #else
-      return "2.2.1";
+   return "2.2.1";
 #endif // #ifdef WIN32
-    }
-  }
+}
+}
 }

@@ -29,19 +29,19 @@
 #include <exception>
 
 namespace ultraschall {
-    namespace reaper {
+namespace reaper {
 
-        class UnsupportedPlatformException : public std::exception
-        {
-        public:
-            UnsupportedPlatformException(const std::string& expectedPlatform);
+class UnsupportedPlatformException : public std::exception
+{
+public:
+   UnsupportedPlatformException(const std::string& expectedPlatform);
 
-            virtual const char* what() const noexcept override;
+   virtual const char* what() const noexcept override;
 
-        private:
-            std::string expectedPlatform_;
-        };
-    }
+private:
+   std::string expectedPlatform_;
+};
+}
 }
 
 #endif // #ifndef __ULTRASCHALL_REAPER_UNSUPPORTED_PLATFORM_EXCEPTION_H_INCL__

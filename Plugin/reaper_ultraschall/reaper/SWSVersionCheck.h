@@ -26,12 +26,12 @@
 #define __ULTRASCHALL_REAPER_SWS_VERSION_CHECK_H_INCL__
 
 namespace ultraschall {
-    namespace reaper {
+namespace reaper {
 
-        const bool SWSVersionCheck();
+bool SWSVersionCheck();
 
-        std::string QuerySWSVersion();
-    }
+std::string QuerySWSVersion();
+}
 }
 
 #endif // __ULTRASCHALL_REAPER_SWS_VERSION_CHECK_H_INCL__

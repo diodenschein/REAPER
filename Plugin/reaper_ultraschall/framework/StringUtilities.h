@@ -35,7 +35,7 @@
 
 namespace ultraschall { namespace framework {
    
-inline const std::vector<std::string> split(const std::string& input, const char delimiter)
+inline std::vector<std::string> split(const std::string& input, const char delimiter)
 {
    std::vector<std::string> tokens;
    std::stringstream stream(input);

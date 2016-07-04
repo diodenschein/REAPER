@@ -73,7 +73,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -104,12 +104,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;REAPER_ULTRASCHALL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\reaper_extension_sdk\jmde;framework;reaper;Submodules\zlib;Submodules\zlib\contrib\minizip;Submodules\curl\include;Submodules\cpr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Submodules\zlib\contrib\vstudio\vc11\x64\ZlibStatDebug;Submodules\curl\build\Win64\VC14\LIB Debug - DLL Windows SSPI</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;zlibstat.lib;libcurld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutDir)$(TargetName)$(TargetExt) "C:\Program Files\REAPER (x64)\Plugins"</Command>
@@ -154,6 +156,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Submodules\zlib\contrib\vstudio\vc11\x64\ZlibStatReleaseWithoutAsm;Submodules\curl\build\Win64\VC14\LIB Release - DLL Windows SSPI</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;zlibstat.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -168,12 +171,10 @@
     <ClCompile Include="framework\ResourceManager.cpp" />
     <ClCompile Include="framework\ServiceFactory.cpp" />
     <ClCompile Include="framework\ServiceManager.cpp" />
-    <ClCompile Include="framework\Stream.cpp" />
     <ClCompile Include="framework\StringUtilities.cpp" />
     <ClCompile Include="framework\TextFileReader.cpp" />
     <ClCompile Include="framework\TextFileWriter.cpp" />
     <ClCompile Include="framework\TranscriptItem.cpp" />
-    <ClCompile Include="reaper\About.cpp" />
     <ClCompile Include="reaper\AboutAction.cpp" />
     <ClCompile Include="reaper\Application.cpp" />
     <ClCompile Include="reaper\Configuration.cpp" />
@@ -183,10 +184,8 @@
     <ClCompile Include="reaper\FileManager.cpp" />
     <ClCompile Include="reaper\HubVersionCheck.cpp" />
     <ClCompile Include="reaper\InsertChaptersAction.cpp" />
-    <ClCompile Include="reaper\InsertTranscriptAction.cpp" />
     <ClCompile Include="reaper\InvalidEntryPointException.cpp" />
     <ClCompile Include="reaper\NotificationWindow.cpp" />
-    <ClCompile Include="reaper\PatchConfiguration.cpp" />
     <ClCompile Include="reaper\PluginVersionCheck.cpp" />
     <ClCompile Include="reaper\ReaperEntryPoints.cpp" />
     <ClCompile Include="reaper\ReaperVersionCheck.cpp" />
@@ -219,15 +218,12 @@
     <ClInclude Include="framework\ServiceFactory.h" />
     <ClInclude Include="framework\ServiceManager.h" />
     <ClInclude Include="framework\ServiceStatus.h" />
-    <ClInclude Include="framework\SharedObject.h" />
-    <ClInclude Include="framework\SharedObjectFactory.h" />
-    <ClInclude Include="framework\SharedObjectManager.h" />
+    <ClInclude Include="framework\IUnknown.h" />
     <ClInclude Include="framework\Stream.h" />
     <ClInclude Include="framework\StringUtilities.h" />
     <ClInclude Include="framework\TextFileReader.h" />
     <ClInclude Include="framework\TextFileWriter.h" />
     <ClInclude Include="framework\TranscriptItem.h" />
-    <ClInclude Include="reaper\About.h" />
     <ClInclude Include="reaper\AboutAction.h" />
     <ClInclude Include="reaper\Application.h" />
     <ClInclude Include="reaper\Configuration.h" />
@@ -238,10 +234,8 @@
     <ClInclude Include="reaper\HubVersionCheck.h" />
     <ClInclude Include="reaper\ICustomAction.h" />
     <ClInclude Include="reaper\InsertChaptersAction.h" />
-    <ClInclude Include="reaper\InsertTranscriptAction.h" />
     <ClInclude Include="reaper\InvalidEntryPointException.h" />
     <ClInclude Include="reaper\NotificationWindow.h" />
-    <ClInclude Include="reaper\PatchConfiguration.h" />
     <ClInclude Include="reaper\PluginVersionCheck.h" />
     <ClInclude Include="reaper\ReaperEntryPoints.h" />
     <ClInclude Include="reaper\ReaperVersionCheck.h" />

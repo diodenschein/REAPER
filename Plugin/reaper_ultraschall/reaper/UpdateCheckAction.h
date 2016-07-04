@@ -36,7 +36,7 @@ namespace ultraschall { namespace reaper {
   public:
     static const char* UniqueId();
     
-    static const ServiceStatus CreateCustomAction(ICustomAction*& pCustomAction)
+    static ServiceStatus CreateCustomAction(ICustomAction*& pCustomAction)
     {
       pCustomAction = new UpdateCheckAction();
       PRECONDITION_RETURN(pCustomAction != 0, SERVICE_FAILURE);
@@ -49,7 +49,7 @@ namespace ultraschall { namespace reaper {
       return resourceManager.GetLocalizedString(actionNameId_);
     }
     
-    virtual const ServiceStatus Execute() override;
+    virtual ServiceStatus Execute() override;
     
   protected:
     virtual ~UpdateCheckAction()
@@ -59,6 +59,8 @@ namespace ultraschall { namespace reaper {
     }
     
   private:
+     static const size_t MAX_VERSION_LENGTH = 4;
+
     UpdateCheckAction()
     {
       framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
@@ -68,10 +70,14 @@ namespace ultraschall { namespace reaper {
         resourceManager.SetLocalizedString(actionNameId_, "en-EN", "ULTRASCHALL: Check for Updates...");
       }
     }
-        
-    framework::ResourceId actionNameId_;
 
-    static bool IsUpdatedVersion(const std::string& updatedVersionString);
+    static std::string QueryUpdatedVersion();
+
+    static std::vector<int> NormalizeVersionString(const std::string& version);
+
+    static int CompareVersions(const std::string& lhs, const std::string& rhs);
+
+    framework::ResourceId actionNameId_;
   };
   
 }}
