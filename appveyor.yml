@@ -1,0 +1,4 @@
+version: '{build}'
+configuration: Release
+build:
+  verbosity: minimal
