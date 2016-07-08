@@ -12,9 +12,7 @@ build:
   verbosity: normal
 notifications:
 - provider: Slack
-  auth_token:
-    secure: MREXfm5HrzEJO4xqhTsrPQElWfzgv1IDoxfXcr0qUL3ThLBIFJUYPp/ZEyBB7TxkvDuaAWKu8C1IueWPy02USA==
-  channel: '#github'
+  incoming_webhook: https://hooks.slack.com/services/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
   on_build_success: true
   on_build_failure: true
-  on_build_status_changed: true
+  on_build_status_changed: false
