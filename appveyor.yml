@@ -1,4 +1,4 @@
-version: '{build}'
+version: Build {build}
 configuration: Release
 platform: x64
 before_build:
@@ -10,3 +10,11 @@ build:
   project: .\Plugin\reaper_ultraschall\reaper_ultraschall.sln
   parallel: true
   verbosity: normal
+notifications:
+- provider: Slack
+  auth_token:
+    secure: MREXfm5HrzEJO4xqhTsrPQElWfzgv1IDoxfXcr0qUL3ThLBIFJUYPp/ZEyBB7TxkvDuaAWKu8C1IueWPy02USA==
+  channel: '#github'
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
