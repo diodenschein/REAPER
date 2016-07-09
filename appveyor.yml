@@ -13,6 +13,7 @@ build:
 notifications:
 - provider: Slack
   incoming_webhook: https://hooks.slack.com/services/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
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: false
+  on_build_success: false
+  on_build_failure: false
+  on_build_status_changed: true
+  
