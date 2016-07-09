@@ -67,11 +67,10 @@ pushd Plugin\reaper_ultraschall\Submodules\curl
 git checkout --quiet master > nul
 git pull > nul
 pushd projects
-rem call generate.bat vc14 > nul
+if not exist ".\Windows\VC14\lib\libcurl.vcxproj" call generate.bat vc14 > nul
 pushd Windows\VC14\lib
 msbuild /nologo /maxcpucount /target:%BUILD_TARGET% /property:configuration=%CURL_BUILD_CONFIG% /property:platform=%BUILD_PLATFORM_NAME% /clp:ErrorsOnly;ShowTimestamp libcurl.vcxproj   
 popd
-rem call generate -clean > nul
 popd
 popd
 echo Done.
