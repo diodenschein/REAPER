@@ -7,3 +7,6 @@
 [submodule "Plugin/reaper_ultraschall/Submodules/cpr"]
 	path = Plugin/reaper_ultraschall/Submodules/cpr
 	url = https://github.com/whoshuu/cpr.git
+[submodule "Plugin/reaper_ultraschall/Submodules/expat"]
+	path = Plugin/reaper_ultraschall/Submodules/expat
+	url = https://github.com/Ultraschall/expat.git
