@@ -50,8 +50,7 @@ if "%3"=="x86" set BUILD_PLATFORM=
 if "%3"=="x86" set BUILD_PLATFORM_NAME=x86
 
 echo Updating Submodules...
-git submodule init > nul
-git submodule update > nul
+git submodule update --init > nul
 echo Done.
 
 echo %BUILD_TARGET%ing zlib library... (%BUILD_CONFIG%, %BUILD_PLATFORM_NAME%)
@@ -79,6 +78,16 @@ echo %BUILD_TARGET%ing cpr library... (%BUILD_CONFIG%, %BUILD_PLATFORM_NAME%)
 pushd Plugin\reaper_ultraschall\Submodules\cpr
 git checkout --quiet master > nul
 git pull > nul
+popd
+echo Done.
+
+echo %BUILD_TARGET%ing expat library... (%BUILD_CONFIG%, %BUILD_PLATFORM_NAME%)
+pushd Plugin\reaper_ultraschall\Submodules\expat
+git checkout --quiet master > nul
+git pull > nul
+pushd lib
+msbuild /nologo /maxcpucount /target:%BUILD_TARGET% /property:configuration=%BUILD_CONFIG% /property:platform=%BUILD_PLATFORM_NAME% /property:platformtoolset=v140 /clp:ErrorsOnly;ShowTimestamp expat_static.vcxproj  
+popd
 popd
 echo Done.
 
