@@ -52,12 +52,12 @@ public:
 
    virtual ServiceStatus Configure();
 
-   template<class CustomActionType> ServiceStatus RegisterCustomAction() const;
+   template<class C> ServiceStatus RegisterCustomAction() const;
    static bool OnCustomAction(const int32_t id);
 
-   template<class CustomActionType> void InvokeCustomAction() const;
+   template<class C> void InvokeCustomAction() const;
 
-   template<class CustomActionType> bool InvokeCustomActionAsync() const;
+   template<class C> bool InvokeCustomActionAsync() const;
 
    static const size_t MAX_REAPER_STRING_BUFFER_SIZE = 4096;
 
@@ -95,11 +95,13 @@ typedef struct
    void *extra; // reserved for future use
 } custom_action_register_t;
 
-template<class CustomActionType> ServiceStatus Application::RegisterCustomAction() const
+template<class C> ServiceStatus Application::RegisterCustomAction() const
 {
+   typedef typename C custom_action_type;
+
    ServiceStatus status = SERVICE_FAILURE;
 
-   const char* uniqueId = CustomActionType::UniqueId();
+   const char* uniqueId = custom_action_type::UniqueId();
    if(uniqueId != 0)
    {
       CustomActionFactory& factory = CustomActionFactory::Instance();
@@ -132,11 +134,13 @@ template<class CustomActionType> ServiceStatus Application::RegisterCustomAction
    return status;
 }
 
-template<class CustomActionType> void Application::InvokeCustomAction() const
+template<class C> void Application::InvokeCustomAction() const
 {
+   typedef typename C custom_action_type;
+
    reaper::CustomActionManager& manager = reaper::CustomActionManager::Instance();
    reaper::ICustomAction* pCustomAction = 0;
-   ServiceStatus status = manager.LookupCustomAction(CustomActionType::UniqueId(), pCustomAction);
+   ServiceStatus status = manager.LookupCustomAction(custom_action_type::UniqueId(), pCustomAction);
    if(ServiceSucceeded(status) && (pCustomAction != 0))
    {
       pCustomAction->Execute();
@@ -144,13 +148,15 @@ template<class CustomActionType> void Application::InvokeCustomAction() const
    }
 }
 
-template<class CustomActionType> bool Application::InvokeCustomActionAsync() const
+template<class C> bool Application::InvokeCustomActionAsync() const
 {
+   typedef typename C custom_action_type;
+
    bool result = false;
 
    reaper::CustomActionManager& manager = reaper::CustomActionManager::Instance();
    reaper::ICustomAction* pCustomAction = 0;
-   ServiceStatus status = manager.LookupCustomAction(CustomActionType::UniqueId(), pCustomAction);
+   ServiceStatus status = manager.LookupCustomAction(custom_action_type::UniqueId(), pCustomAction);
    if(ServiceSucceeded(status) && (pCustomAction != 0))
    {
 #ifdef WIN32

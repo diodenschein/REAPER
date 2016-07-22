@@ -26,7 +26,6 @@
 #define __ULTRASCHALL_REAPER_ICUSTOM_ACTION_H_INCL__
 
 #include <IUnknown.h>
-#include "CustomActionFactory.h"
 
 namespace framework = ultraschall::framework;
 
