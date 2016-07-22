@@ -27,9 +27,6 @@
     <ClCompile Include="framework\ChapterMarker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\Malloc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\ResourceId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
