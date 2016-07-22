@@ -29,57 +29,65 @@
 #include <ResourceManager.h>
 #include "CustomAction.h"
 
-namespace ultraschall { namespace reaper {
-  
-  class UpdateCheckAction : public CustomAction 
-  {
-  public:
-    static const char* UniqueId();
-    
-    static ServiceStatus CreateCustomAction(ICustomAction*& pCustomAction)
-    {
-      pCustomAction = new UpdateCheckAction();
-      PRECONDITION_RETURN(pCustomAction != 0, SERVICE_FAILURE);
-      return SERVICE_SUCCESS;
-    }
-    
-    virtual const char* LocalizedName() const override
-    {
-      framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
-      return resourceManager.GetLocalizedString(actionNameId_);
-    }
-    
-    virtual ServiceStatus Execute() override;
-    
-  protected:
-    virtual ~UpdateCheckAction()
-    {
-      framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
-      resourceManager.UnregisterLocalizedString(actionNameId_);
-    }
-    
-  private:
-     static const size_t MAX_VERSION_LENGTH = 4;
+namespace ultraschall {
+namespace reaper {
 
-    UpdateCheckAction()
-    {
-      framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
-      ServiceStatus status = resourceManager.RegisterLocalizedString(actionNameId_);
-      if(ServiceSucceeded(status))
-      {
-        resourceManager.SetLocalizedString(actionNameId_, "en-EN", "ULTRASCHALL: Check for Updates...");
-      }
-    }
+class UpdateCheckAction : public CustomAction
+{
+public:
+	static const char* UniqueId();
 
-    static std::string QueryUpdatedVersion();
+	static ServiceStatus CreateCustomAction(ICustomAction*& pCustomAction)
+	{
+		pCustomAction = new UpdateCheckAction();
+		PRECONDITION_RETURN(pCustomAction != 0, SERVICE_FAILURE);
+		return SERVICE_SUCCESS;
+	}
 
-    static std::vector<int> NormalizeVersionString(const std::string& version);
+	virtual const char* LocalizedName() const override
+	{
+		framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+		return resourceManager.GetLocalizedString(actionNameId_);
+	}
 
-    static int CompareVersions(const std::string& lhs, const std::string& rhs);
+	virtual ServiceStatus Execute() override;
 
-    framework::ResourceId actionNameId_;
-  };
-  
-}}
+protected:
+	virtual ~UpdateCheckAction()
+	{
+		framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+		resourceManager.UnregisterLocalizedString(actionNameId_);
+	}
+
+private:
+	static const size_t MAX_VERSION_LENGTH = 4;
+	static const char* UPDATE_FILE_URL;
+
+	UpdateCheckAction()
+	{
+		framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+		ServiceStatus status = resourceManager.RegisterLocalizedString(actionNameId_);
+		if(ServiceSucceeded(status))
+		{
+			resourceManager.SetLocalizedString(actionNameId_, "en-EN", "ULTRASCHALL: Check for Updates...");
+		}
+	}
+
+	static std::string QueryUpdatedVersion();
+
+	static std::vector<int> NormalizeVersionString(const std::string& version);
+
+	static int CompareVersions(const std::string& lhs, const std::string& rhs);
+
+	static std::string DownloadVersionFile();
+	static void DownloadVersionFileCallback();
+
+	static std::string ParseVersionFile(const std::string& versionFile);
+
+	framework::ResourceId actionNameId_;
+};
+
+}
+}
 
 #endif // #ifndef __ULTRASCHALL_REAPER_UPDATE_CHECK_ACTION_H_INCL__

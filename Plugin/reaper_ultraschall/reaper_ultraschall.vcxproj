@@ -210,6 +210,7 @@
     <ClInclude Include="framework\IActivationService.h" />
     <ClInclude Include="framework\IApplication.h" />
     <ClInclude Include="framework\IConfigurationService.h" />
+    <ClInclude Include="framework\IDownloadService.h" />
     <ClInclude Include="framework\IService.h" />
     <ClInclude Include="framework\Malloc.h" />
     <ClInclude Include="framework\ResourceId.h" />

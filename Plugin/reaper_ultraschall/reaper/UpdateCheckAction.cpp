@@ -68,6 +68,8 @@ namespace reaper {
 
 static DeclareCustomAction<UpdateCheckAction> action;
 
+const char* UpdateCheckAction::UPDATE_FILE_URL = "http://url.ultraschall-podcast.de/version";
+
 const char* UpdateCheckAction::UniqueId()
 {
 	return "ULTRASCHALL_UPDATE_CHECK";
@@ -144,7 +146,7 @@ ServiceStatus UpdateCheckAction::Execute()
             NotificationWindow::ShowUpdateAvailable("Ultraschall Version Check", "Version " + net_version + " of Ultraschall is available.\nYou are currently running version " + local_version, html_info);
 			}
 		}
-	}, cpr::Url{"https://raw.githubusercontent.com/Ultraschall/REAPER/version_check/ultraschall_version.xml"});
+	}, cpr::Url{UPDATE_FILE_URL});
 #else
 
    const std::string currentVersion = QueryPluginVersion();
@@ -161,7 +163,13 @@ ServiceStatus UpdateCheckAction::Execute()
 
 std::string UpdateCheckAction::QueryUpdatedVersion()
 {
-   std::string updatedVersion;
+	std::string updatedVersion;
+
+   std::string versionfile = DownloadVersionFile();
+   if(versionfile.empty() == false)
+   {
+	   updatedVersion = ParseVersionFile(versionfile);
+   }
 
    return updatedVersion;
 }
@@ -210,6 +218,24 @@ int UpdateCheckAction::CompareVersions(const std::string& lhs, const std::string
    }
 
    return result;
+}
+
+std::string UpdateCheckAction::DownloadVersionFile()
+{
+	std::string file;
+	return file;
+}
+
+void UpdateCheckAction::DownloadVersionFileCallback()
+{
+
+}
+
+std::string UpdateCheckAction::ParseVersionFile(const std::string& versionFile)
+{
+	std::string version;
+
+	return version;
 }
 
 }}
