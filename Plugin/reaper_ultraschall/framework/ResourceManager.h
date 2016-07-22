@@ -61,7 +61,6 @@ private:
    
    std::string currentLanguage_;
    std::map<std::string, std::map<ResourceId, std::string>> localizedStrings_;
-   
 };
     
 }}

@@ -30,11 +30,6 @@
 
 namespace ultraschall { namespace framework {
    
-struct StartupInformation
-{
-   void* data;
-};
-   
 class IActivationService
 {
 public:
