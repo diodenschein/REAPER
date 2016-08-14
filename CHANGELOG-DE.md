@@ -29,7 +29,7 @@
 ## 2.2.2 Gropius - 2016-August-14
 
 * Soundboard [Mac]: **Bugfix**
-*Bugfix: Aufgenommene Soundbooard-Spuren werdem jetzt abgespielt.*
+*Bugfix: Aufgenommene Soundboard-Spuren werden jetzt abgespielt.*
 
 * Misc [Windows]: **Kompatibilität**
 *Updates für Windows 10 Version 1607 (Build 14393, Anniversary-Update).*
