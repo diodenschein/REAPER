@@ -87,13 +87,11 @@ const char* AboutAction::LocalizedName() const
 
 ServiceStatus AboutAction::Execute()
 {
-#if 1
-
    const std::string pluginVersion = QueryPluginVersion();
 
    std::string message1 = "\
 http://ultraschall.fm\r\n\r\n\
-Copyright (c) 2016 Ralf Stockmann, Daniel Lindenfelser, Katrin Leinweber, Andreas Pieper, Artur Kordowski, Tim Pritlove, Heiko Panjas\r\n\r\n\
+Copyright (c) 2016 Ralf Stockmann, Daniel Lindenfelser, Katrin Leinweber, Andreas Pieper, Artur Kordowski, Mich\u00E9l Knecht, Tim Pritlove, Heiko Panjas\r\n\r\n\
 Ultraschall REAPER Extension " + pluginVersion + "\r\n";
 
    const std::string themeVersion = QueryThemeVersion();
@@ -130,11 +128,8 @@ REAPER ";
    message2 += "\r\n";
 
    NotificationWindow::Show("About Ultraschall 2.3 \"Gropius\"...", message1 + message2);
-#else
-   ShowAbout();
-#endif
+
    return SERVICE_SUCCESS;
 }
 
-}
-}
+}}
