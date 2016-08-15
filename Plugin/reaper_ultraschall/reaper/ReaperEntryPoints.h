@@ -54,10 +54,11 @@ namespace ultraschall { namespace reaper {
 class ReaperEntryPoints
 {
 public:
-   static void Setup(reaper_plugin_info_t* pPluginInfo);
-   
+   static REAPER_PLUGIN_HINSTANCE instance_;
+
+   static void Setup(REAPER_PLUGIN_HINSTANCE instance, reaper_plugin_info_t* pPluginInfo);
 private:
-   ReaperEntryPoints(reaper_plugin_info_t* pPluginInfo);
+   ReaperEntryPoints(REAPER_PLUGIN_HINSTANCE instance, reaper_plugin_info_t* pPluginInfo);
 };
 
 }}

@@ -29,52 +29,51 @@
 #include "FileManager.h"
 
 namespace ultraschall {
-    namespace reaper {
+namespace reaper {
 
-        const bool SWSVersionCheck()
-        {
-            bool result = false;
+bool SWSVersionCheck()
+{
+   bool result = false;
 
 #ifndef WIN32
-            const std::string swsPlugin2_8UserPath = FileManager::UserApplicationSupportDirectory() +
-                "/REAPER/UserPlugins/reaper_sws_extension.dylib";
+   const std::string swsPlugin2_8UserPath = FileManager::UserApplicationSupportDirectory() +
+      "/REAPER/UserPlugins/reaper_sws_extension.dylib";
 #else
-            const std::string swsPlugin2_8UserPath = FileManager::ProgramFilesDirectory() + 
-                "\\REAPER (x64)\\Plugins\\reaper_sws64.dll";
+   const std::string swsPlugin2_8UserPath = FileManager::ProgramFilesDirectory() + "\\REAPER (x64)\\Plugins\\reaper_sws64.dll";
 #endif // #ifndef WIN32 
 
-            if(FileManager::FileExists(swsPlugin2_8UserPath) == true)
-            {
-                framework::Stream<uint8_t>* pStream = framework::BinaryFileReader::ReadBytes(swsPlugin2_8UserPath);
-                if(pStream != 0)
-                {
+   if(FileManager::FileExists(swsPlugin2_8UserPath) == true)
+   {
+      framework::Stream<uint8_t>* pStream = framework::BinaryFileReader::ReadBytes(swsPlugin2_8UserPath);
+      if(pStream != 0)
+      {
 #ifndef WIN32
-                    static const uint64_t originalCrc = 749893719;
+         static const uint64_t originalCrc = 749893719;
 #else
-                    static const uint64_t originalCrc = 3584691243;
+         static const uint64_t originalCrc = 3584691243;
 #endif // #ifndef WIN32
 
-                    const uint64_t crc = pStream->CRC32();
-                    if(originalCrc == crc)
-                    {
-                        result = true;
-                    }
+         const uint64_t crc = pStream->CRC32();
+         if(originalCrc == crc)
+         {
+            result = true;
+         }
 
-                    SafeRelease(pStream);
-                }
-            }
+         SafeRelease(pStream);
+      }
+   }
 
-            return result;
-        }
+   return result;
+}
 
-        std::string QuerySWSVersion()
-        {
+std::string QuerySWSVersion()
+{
 #ifdef WIN32
-            const std::string path = FileManager::ProgramFilesDirectory() + "\\REAPER (x64)\\Plugins\\reaper_sws64.dll";
-            return FileManager::ReadVersionFromFile(path);
+   const std::string path = FileManager::ProgramFilesDirectory() + "\\REAPER (x64)\\Plugins\\reaper_sws64.dll";
+   return FileManager::ReadVersionFromFile(path);
 #else
-            return "2.8.3";
+   return "2.8.3";
 #endif // #ifdef WIN32
-        }
-    }
+}
+}
 }

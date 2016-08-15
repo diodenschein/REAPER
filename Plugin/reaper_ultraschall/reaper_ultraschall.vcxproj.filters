@@ -27,9 +27,6 @@
     <ClCompile Include="framework\ChapterMarker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\Malloc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\ResourceId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\ServiceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\Stream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\StringUtilities.cpp">
@@ -84,13 +78,7 @@
     <ClCompile Include="reaper\InsertChaptersAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="reaper\InsertTranscriptAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="reaper\InvalidEntryPointException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="reaper\PatchConfiguration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="reaper\reaper_ultraschall.cpp">
@@ -188,15 +176,6 @@
     <ClInclude Include="framework\ServiceStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\SharedObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\SharedObjectFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\SharedObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\Stream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -242,13 +221,7 @@
     <ClInclude Include="reaper\InsertChaptersAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="reaper\InsertTranscriptAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="reaper\InvalidEntryPointException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="reaper\PatchConfiguration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="reaper\ReaperEntryPoints.h">
@@ -303,6 +276,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="reaper\NotificationWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\IUnknown.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\IDownloadService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

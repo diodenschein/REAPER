@@ -46,19 +46,49 @@
 #include "NotificationWindow.h"
 #include "FileManager.h"
 
-namespace ultraschall { namespace reaper {
+namespace ultraschall {
+namespace reaper {
 
 static DeclareCustomAction<AboutAction> action;
+
+AboutAction::AboutAction()
+{
+   framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+   ServiceStatus status = resourceManager.RegisterLocalizedString(actionNameId_);
+   if(ServiceSucceeded(status))
+   {
+      resourceManager.SetLocalizedString(actionNameId_, "en-EN", "ULTRASCHALL: About Ultraschall...");
+   }
+}
+
+AboutAction::~AboutAction()
+{
+   framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+   resourceManager.UnregisterLocalizedString(actionNameId_);
+}
 
 const char* AboutAction::UniqueId()
 {
    return "ULTRASCHALL_ABOUT_ULTRASCHALL";
 }
 
-const ServiceStatus AboutAction::Execute()
+ServiceStatus AboutAction::CreateCustomAction(ICustomAction*& pCustomAction)
+{
+   pCustomAction = new AboutAction();
+   PRECONDITION_RETURN(pCustomAction != 0, SERVICE_FAILURE);
+   return SERVICE_SUCCESS;
+}
+
+const char* AboutAction::LocalizedName() const
+{
+   framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
+   return resourceManager.GetLocalizedString(actionNameId_);
+}
+
+ServiceStatus AboutAction::Execute()
 {
    const std::string pluginVersion = QueryPluginVersion();
-  
+
    std::string message1 = "\
 http://ultraschall.fm\r\n\r\n\
 Copyright (c) 2016 Ralf Stockmann, Daniel Lindenfelser, Katrin Leinweber, Andreas Pieper, Artur Kordowski, Mich\u00E9l Knecht, Tim Pritlove, Heiko Panjas\r\n\r\n\
@@ -87,7 +117,7 @@ Ultraschall REAPER Extension " + pluginVersion + "\r\n";
    const std::string studioLinkVersion = QueryStudioLinkVersion();
    if(studioLinkVersion.empty() == false)
    {
-       message1 += "StudioLink Plug-in " + studioLinkVersion + "\r\n";
+      message1 += "StudioLink Plug-in " + studioLinkVersion + "\r\n";
    }
 
    std::string message2 = "\
@@ -97,7 +127,7 @@ REAPER ";
    message2 += QueryRawReaperVersion();
    message2 += "\r\n";
 
-   NotificationWindow::Show("About Ultraschall 2.2.2 \"Gropius\"...", message1 + message2);
+   NotificationWindow::Show("About Ultraschall 2.3 \"Gropius\"...", message1 + message2);
 
    return SERVICE_SUCCESS;
 }

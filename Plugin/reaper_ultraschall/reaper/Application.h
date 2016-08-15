@@ -36,50 +36,55 @@
 
 namespace framework = ultraschall::framework;
 
-namespace ultraschall { namespace reaper {
+namespace ultraschall {
+namespace reaper {
 
 class Application : public framework::IActivationService,
-                    public framework::IConfigurationService
+   public framework::IConfigurationService
 {
 public:
    virtual ~Application();
 
    static Application& Instance();
 
-   const ServiceStatus Start();
+   ServiceStatus Start();
    void Stop();
 
-   virtual const ServiceStatus Configure();
-   
-   template<class CustomActionType> const ServiceStatus RegisterCustomAction() const;
-   static const bool OnCustomAction(const int32_t id);
+   virtual ServiceStatus Configure();
+
+   template<class C> ServiceStatus RegisterCustomAction() const;
+   static bool OnCustomAction(const int32_t id);
+
+   template<class C> void InvokeCustomAction() const;
+
+   template<class C> bool InvokeCustomActionAsync() const;
 
    static const size_t MAX_REAPER_STRING_BUFFER_SIZE = 4096;
 
-   const std::string GetExportPathName() const;
-   const std::string GetProjectPathName() const;
-   const std::string GetProjectFileName() const;
-   const std::string GetProjectFolderName() const;
-   const std::string GetProjectName() const;
-   
-   const std::string TimestampToString(const double timestamp) const;
-   const double StringToTimestamp(const std::string& input) const;
+   std::string GetExportPathName() const;
+   std::string GetProjectPathName() const;
+   std::string GetProjectFileName() const;
+   std::string GetProjectFolderName() const;
+   std::string GetProjectName() const;
 
-   const intptr_t GetCurrentProject() const;
-   
-   const std::vector<framework::ChapterMarker> ChapterMarkers() const;
-   const int32_t SetChapterMarker(const framework::ChapterMarker& chapterMarker) const;
-   const bool DeleteChapterMarker(const framework::ChapterMarker& chapterMarker) const;
+   std::string TimestampToString(const double timestamp) const;
+   double StringToTimestamp(const std::string& input) const;
+
+   intptr_t GetCurrentProject() const;
+
+   std::vector<framework::ChapterMarker> ChapterMarkers() const;
+   int32_t SetChapterMarker(const framework::ChapterMarker& chapterMarker) const;
+   bool DeleteChapterMarker(const framework::ChapterMarker& chapterMarker) const;
    void DeleteAllChapterMarkers() const;
-   
-   const bool InsertTransriptItem(const framework::TranscriptItem transcriptItem) const;
-    
+
 private:
    Application();
 
-   static const bool HealthCheck();
+   static bool HealthCheck();
 
-   const int Register(const char* name, void* pInfoStruct) const;
+   int Register(const char* name, void* pInfoStruct) const;
+
+   static void CustomActionThreadProc(void* args);
 };
 
 typedef struct
@@ -89,12 +94,14 @@ typedef struct
    const char* name;
    void *extra; // reserved for future use
 } custom_action_register_t;
-   
-template<class CustomActionType> const ServiceStatus Application::RegisterCustomAction() const
+
+template<class C> ServiceStatus Application::RegisterCustomAction() const
 {
+   typedef typename C custom_action_type;
+
    ServiceStatus status = SERVICE_FAILURE;
 
-   const char* uniqueId = CustomActionType::UniqueId();
+   const char* uniqueId = custom_action_type::UniqueId();
    if(uniqueId != 0)
    {
       CustomActionFactory& factory = CustomActionFactory::Instance();
@@ -119,7 +126,7 @@ template<class CustomActionType> const ServiceStatus Application::RegisterCustom
          {
             status = SERVICE_INVALID_ARGUMENT;
          }
-         
+
          framework::SafeRelease(pCustomAction);
       }
    }
@@ -127,6 +134,49 @@ template<class CustomActionType> const ServiceStatus Application::RegisterCustom
    return status;
 }
 
-}}
+template<class C> void Application::InvokeCustomAction() const
+{
+   typedef typename C custom_action_type;
+
+   reaper::CustomActionManager& manager = reaper::CustomActionManager::Instance();
+   reaper::ICustomAction* pCustomAction = 0;
+   ServiceStatus status = manager.LookupCustomAction(custom_action_type::UniqueId(), pCustomAction);
+   if(ServiceSucceeded(status) && (pCustomAction != 0))
+   {
+      pCustomAction->Execute();
+      framework::SafeRelease(pCustomAction);
+   }
+}
+
+template<class C> bool Application::InvokeCustomActionAsync() const
+{
+   typedef typename C custom_action_type;
+
+   bool result = false;
+
+   reaper::CustomActionManager& manager = reaper::CustomActionManager::Instance();
+   reaper::ICustomAction* pCustomAction = 0;
+   ServiceStatus status = manager.LookupCustomAction(custom_action_type::UniqueId(), pCustomAction);
+   if(ServiceSucceeded(status) && (pCustomAction != 0))
+   {
+#ifdef WIN32
+      uintptr_t result = _beginthread(CustomActionThreadProc, 0, reinterpret_cast<void*>(pCustomAction));
+      if(result != -1)
+      {
+         result = true;
+      }
+#else
+      pCustomAction->Execute();
+      result = true;
+#endif
+
+      framework::SafeRelease(pCustomAction);
+   }
+
+   return result;
+}
+
+}
+}
 
 #endif // #ifndef __ULTRASCHALL_REAPER_APPLICATION_H_INCL__

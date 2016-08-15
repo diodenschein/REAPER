@@ -30,14 +30,15 @@
 #include "ThemeVersionCheck.h"
 #include "FileManager.h"
 
-namespace ultraschall { namespace reaper {
+namespace ultraschall {
+namespace reaper {
 
-const std::string QueryThemeVersion()
+std::string QueryThemeVersion()
 {
    std::string result;
-   
+
    std::string versionString;
-   
+
 #ifndef WIN32
    const std::string applicationSupportDirectory = FileManager::UserApplicationSupportDirectory();
 #else
@@ -48,10 +49,10 @@ const std::string QueryThemeVersion()
    {
 #ifndef WIN32
       const std::string themeControlFile = applicationSupportDirectory +
-        "/REAPER/ColorThemes/Ultraschall_2.2.ReaperThemeZip";
+         "/REAPER/ColorThemes/Ultraschall_2.2.ReaperThemeZip";
 #else
-       const std::string themeControlFile = applicationSupportDirectory +
-           "\\REAPER\\ColorThemes\\Ultraschall_2.2.ReaperThemeZip";
+      const std::string themeControlFile = applicationSupportDirectory +
+         "\\REAPER\\ColorThemes\\Ultraschall_2.2.ReaperThemeZip";
 #endif // #ifndef WIN32
 
       unzFile themeFile = unzOpen(themeControlFile.c_str());
@@ -84,25 +85,25 @@ const std::string QueryThemeVersion()
                               versionString = fileBuffer;
                               decoded = true;
                            }
-                           
+
                            free(fileBuffer);
                            fileBuffer = 0;
                         }
                      }
-                     
+
                      unzCloseCurrentFile(themeFile);
                   }
                }
             }
-            
+
             zipError = unzGoToNextFile(themeFile);
          }
-         
+
          unzClose(themeFile);
          themeFile = 0;
       }
    }
-   
+
    if(versionString.empty() == false)
    {
       const std::vector<std::string> versionTokens = framework::split(versionString, ':');
@@ -119,4 +120,5 @@ const std::string QueryThemeVersion()
    return result;
 }
 
-}}
+}
+}

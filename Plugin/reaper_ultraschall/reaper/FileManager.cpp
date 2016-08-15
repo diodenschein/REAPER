@@ -46,14 +46,14 @@ namespace framework = ultraschall::framework;
 
 namespace ultraschall { namespace reaper {
 
-const std::string FileManager::BrowseForFiles(const framework::ResourceId id)
+std::string FileManager::BrowseForFiles(const framework::ResourceId id)
 {
     framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
     const std::string message = resourceManager.GetLocalizedString(id);
     return BrowseForFiles(message);
 }
 
-const std::string FileManager::BrowseForFiles(const std::string& title)
+std::string FileManager::BrowseForFiles(const std::string& title)
 {
     std::string path;
 
@@ -129,14 +129,14 @@ const std::string FileManager::BrowseForFiles(const std::string& title)
     return path;
 }
 
-const std::string FileManager::BrowseForFolder(const framework::ResourceId id, const std::string& folder)
+std::string FileManager::BrowseForFolder(const framework::ResourceId id, const std::string& folder)
 {
     framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
     const std::string message = resourceManager.GetLocalizedString(id);
     return BrowseForFolder(message, folder);
 }
 
-const std::string FileManager::BrowseForFolder(const std::string& title, const std::string& folder)
+std::string FileManager::BrowseForFolder(const std::string& title, const std::string& folder)
 {
     std::string path;
 
@@ -219,7 +219,7 @@ const std::string FileManager::BrowseForFolder(const std::string& title, const s
     return path;
 }
 
-const std::string FileManager::AppendPath(const std::string& prefix, const std::string& append)
+std::string FileManager::AppendPath(const std::string& prefix, const std::string& append)
 {
 #ifndef WIN32 
     return prefix + '/' + append;
@@ -228,7 +228,7 @@ const std::string FileManager::AppendPath(const std::string& prefix, const std::
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::UserHomeDirectory()
+std::string FileManager::UserHomeDirectory()
 {
     std::string directory;
 
@@ -241,7 +241,7 @@ const std::string FileManager::UserHomeDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::UserApplicationSupportDirectory()
+std::string FileManager::UserApplicationSupportDirectory()
 {
     std::string directory;
 
@@ -255,7 +255,7 @@ const std::string FileManager::UserApplicationSupportDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::SystemApplicationSupportDirectory()
+std::string FileManager::SystemApplicationSupportDirectory()
 {
     std::string directory;
 
@@ -269,7 +269,7 @@ const std::string FileManager::SystemApplicationSupportDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::ProgramFilesDirectory()
+std::string FileManager::ProgramFilesDirectory()
 {
     std::string directory;
 
@@ -288,7 +288,7 @@ const std::string FileManager::ProgramFilesDirectory()
     return directory;
     }
 
-const std::string FileManager::RoamingAppDataDirectory()
+std::string FileManager::RoamingAppDataDirectory()
 {
     std::string directory;
 
@@ -307,7 +307,7 @@ const std::string FileManager::RoamingAppDataDirectory()
     return directory;
     }
 
-const bool FileManager::FileExists(const std::string& path)
+bool FileManager::FileExists(const std::string& path)
 {
     bool fileExists = false;
 
@@ -326,7 +326,7 @@ const bool FileManager::FileExists(const std::string& path)
     return fileExists;
 }
 
-const std::vector<std::string> FileManager::ReadFile(const std::string& filename)
+std::vector<std::string> FileManager::ReadFile(const std::string& filename)
 {
     std::vector<std::string> lines;
 

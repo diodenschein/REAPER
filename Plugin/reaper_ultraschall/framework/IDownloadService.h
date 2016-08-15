@@ -22,25 +22,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Malloc.h>
-#include <cstdlib>
+#ifndef __ULTRASCHALL_FRAMEWORK_IDOWNLOAD_SERVICE_H_INCL__
+#define __ULTRASCHALL_FRAMEWORK_IDOWNLOAD_SERVICE_H_INCL__
+
+#include <Framework.h>
+#include <ServiceStatus.h>
 
 namespace ultraschall { namespace framework {
-   
-template<> size_t Malloc<void>::Size()
-{
-   return 1;
-}
-   
-template<> void* Malloc<void>::Alloc(const size_t itemCount)
-{
-   return calloc(Size(), itemCount);
-}
 
-template<> void Malloc<void>::Free(void*& ptr)
+class IDownloadServiceCallback
 {
-   free(ptr); ptr = 0;
-}
-   
+public:
+	virtual void Succeeded(const uint8_t* data, const size_t dataSize) = 0;
+
+	virtual void Failed(const int32_t errorCode) = 0;
+
+protected:
+	virtual ~IDownloadServiceCallback()
+	{
+	}
+};
+
+class IDownloadService
+{
+public:
+	virtual ServiceStatus StartDownload(const char* url, IDownloadServiceCallback* pCallback) = 0;
+
+	virtual void CancelDownload() = 0;
+
+protected:
+	virtual ~IDownloadService()
+	{
+	}
+};
+
 }}
 
+#endif // #ifndef __ULTRASCHALL_FRAMEWORK_IDOWNLOAD_SERVICE_H_INCL__
