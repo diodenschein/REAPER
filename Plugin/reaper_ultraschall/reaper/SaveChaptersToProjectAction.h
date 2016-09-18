@@ -64,7 +64,7 @@ protected:
       resourceManager.UnregisterLocalizedString(noProjectNameMessageId_);
    }
 
-   static const std::string Path();
+   static std::string Path();
 
 private:
    SaveChaptersToProjectAction()

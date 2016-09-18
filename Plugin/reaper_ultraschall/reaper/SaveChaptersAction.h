@@ -66,8 +66,6 @@ protected:
       resourceManager.UnregisterLocalizedString(saveOperationCanceledId_);
    }
 
-   static const std::string Path();
-
 private:
    SaveChaptersAction()
    {

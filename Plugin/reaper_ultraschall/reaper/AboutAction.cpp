@@ -26,9 +26,8 @@
 #include <vector>
 #include <fstream>
 
-#include <cpr/cpr.h>
-
 #ifndef _WIN32
+#include <cpr/cpr.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
@@ -37,10 +36,9 @@
 
 #include "ReaperVersionCheck.h"
 #include "ThemeVersionCheck.h"
-#include "HubVersionCheck.h"
+#include "VersionHandler.h"
 #include "SoundboardVersionCheck.h"
 #include "StudioLinkVersionCheck.h"
-#include "PluginVersionCheck.h"
 #include "SWSVersionCheck.h"
 #include "AboutAction.h"
 #include "NotificationWindow.h"
@@ -57,8 +55,8 @@ const char* AboutAction::UniqueId()
 
 const ServiceStatus AboutAction::Execute()
 {
-   const std::string pluginVersion = QueryPluginVersion();
-  
+   const std::string pluginVersion = VersionHandler::PluginVersion();
+
    std::string message1 = "\
 http://ultraschall.fm\r\n\r\n\
 Copyright (c) 2016 Ralf Stockmann, Daniel Lindenfelser, Katrin Leinweber, Andreas Pieper, Artur Kordowski, Mich\u00E9l Knecht, Tim Pritlove, Heiko Panjas\r\n\r\n\

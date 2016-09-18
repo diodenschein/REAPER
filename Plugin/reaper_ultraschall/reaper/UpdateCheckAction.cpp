@@ -27,12 +27,12 @@
 #include <vector>
 #include <fstream>
 
-#include <cpr/cpr.h>
-
 #include <Framework.h>
 #include <StringUtilities.h>
+#include "VersionHandler.h"
 
 #ifndef WIN32
+#include <cpr/cpr.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
@@ -41,11 +41,17 @@
 #endif // #ifdef WIN32
 
 #include "UpdateCheckAction.h"
-#include "PluginVersionCheck.h"
 #include "NotificationWindow.h"
 
 namespace ultraschall {
 namespace reaper {
+
+std::string DownloadVersionFile()
+{
+	std::string xml;
+
+	return xml;
+}
 
 static DeclareCustomAction<UpdateCheckAction> action;
 
@@ -125,8 +131,14 @@ const ServiceStatus UpdateCheckAction::Execute()
 				MessageBox::ShowUpdateAvailable("Ultraschall Version Check", "Version " + net_version + " of Ultraschall is available.\nYou are currently running version " + local_version, html_info);
 			}
 		}
-	}, cpr::Url{"https://raw.githubusercontent.com/Ultraschall/REAPER/version_check/ultraschall_version.xml"});
-#endif // #if 0
+	}, cpr::Url{UPDATE_FILE_URL});
+#endif // #ifndef WIN32
+
+	std::string xml = DownloadVersionFile();
+	if(xml.empty() == false)
+	{
+
+	}
 
 	return SERVICE_SUCCESS;
 }
@@ -143,7 +155,7 @@ bool UpdateCheckAction::IsUpdatedVersion(const std::string& updatedVersionString
 																	 VERSION_STRING_SEPARATOR);
 	if(updatedVersion.size() >= MIN_VERSION_PARTS_COUNT)
 	{
-		const std::string installedVersionString = QueryPluginVersion();
+		const std::string installedVersionString = VersionHandler::PluginVersion();
 		if(installedVersionString.empty() == false)
 		{
 			const std::vector<std::string> installedVersion = framework::split(installedVersionString,

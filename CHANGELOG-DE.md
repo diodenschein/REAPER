@@ -26,6 +26,11 @@
 
 #### Last Changelog:
 
+## 2.2.3 Gropius - 2016-August-25
+
+* Soundboard: **Bugfix**
+*Bugfix: Mit OSC kann das Abspielen von Sounds nicht angehalten werden. Danke an Bastian Boessl für den Bugreport.*
+
 ## 2.2.2 Gropius - 2016-August-14
 
 * Soundboard [Mac]: **Bugfix**

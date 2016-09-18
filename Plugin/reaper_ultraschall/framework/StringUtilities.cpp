@@ -28,7 +28,7 @@
 
 namespace ultraschall { namespace framework {
 
-std::wstring MakeUTF16String(const std::string& src)
+std::wstring MakeUtf16String(const std::string& src)
 {
    std::wstring result;
    
@@ -44,7 +44,7 @@ std::wstring MakeUTF16String(const std::string& src)
    return result;
 }
 
-std::string MakeUTF8String(const std::wstring& src)
+std::string MakeUtf8String(const std::wstring& src)
 {
    std::string result;
 

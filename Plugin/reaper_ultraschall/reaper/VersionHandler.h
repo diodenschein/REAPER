@@ -22,13 +22,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __ULTRASCHALL_REAPER_PLUGIN_VERSION_CHECK_H_INCL__
-#define __ULTRASCHALL_REAPER_PLUGIN_VERSION_CHECK_H_INCL__
+#ifndef __ULTRASCHALL_REAPER_VERSION_HANDLER_H_INCL__
+#define __ULTRASCHALL_REAPER_VERSION_HANDLER_H_INCL__
 
-namespace ultraschall { namespace reaper {
-  
-  const std::string QueryPluginVersion();
-  
-}}
+#include <string>
 
-#endif // __ULTRASCHALL_REAPER_PLUGIN_VERSION_CHECK_H_INCL__
+namespace ultraschall {
+namespace reaper {
+
+class VersionHandler
+{
+public:
+#ifndef WIN32
+	static std::string HubVersion();
+#endif // #ifndef WIN32
+
+	static std::string PluginVersion();
+};
+
+}
+}
+
+#endif // #ifndef __ULTRASCHALL_REAPER_VERSION_HANDLER_H_INCL__

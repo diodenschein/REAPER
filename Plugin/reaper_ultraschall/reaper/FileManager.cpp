@@ -46,14 +46,14 @@ namespace framework = ultraschall::framework;
 
 namespace ultraschall { namespace reaper {
 
-const std::string FileManager::BrowseForFiles(const framework::ResourceId id)
+std::string FileManager::BrowseForFiles(const framework::ResourceId id)
 {
     framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
     const std::string message = resourceManager.GetLocalizedString(id);
     return BrowseForFiles(message);
 }
 
-const std::string FileManager::BrowseForFiles(const std::string& title)
+std::string FileManager::BrowseForFiles(const std::string& title)
 {
     std::string path;
 
@@ -88,7 +88,7 @@ const std::string FileManager::BrowseForFiles(const std::string& title)
     HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_INPROC, IID_PPV_ARGS(&pfod));
     if(SUCCEEDED(hr))
     {
-        pfod->SetTitle(framework::MakeUTF16String(title).c_str());
+        pfod->SetTitle(framework::MakeUtf16String(title).c_str());
 
         COMDLG_FILTERSPEC filters[3] = {0};
         filters[0].pszName = L"MP4 chapters";
@@ -113,7 +113,7 @@ const std::string FileManager::BrowseForFiles(const std::string& title)
                 hr = psi->GetDisplayName(SIGDN_FILESYSPATH, &fileSystemPath);
                 if(SUCCEEDED(hr) && (nullptr != fileSystemPath))
                 {
-                    path = framework::MakeUTF8String(fileSystemPath);
+                    path = framework::MakeUtf8String(fileSystemPath);
                     CoTaskMemFree(fileSystemPath);
                 }
 
@@ -129,14 +129,14 @@ const std::string FileManager::BrowseForFiles(const std::string& title)
     return path;
 }
 
-const std::string FileManager::BrowseForFolder(const framework::ResourceId id, const std::string& folder)
+std::string FileManager::BrowseForFolder(const framework::ResourceId id, const std::string& folder)
 {
     framework::ResourceManager& resourceManager = framework::ResourceManager::Instance();
     const std::string message = resourceManager.GetLocalizedString(id);
     return BrowseForFolder(message, folder);
 }
 
-const std::string FileManager::BrowseForFolder(const std::string& title, const std::string& folder)
+std::string FileManager::BrowseForFolder(const std::string& title, const std::string& folder)
 {
     std::string path;
 
@@ -167,11 +167,11 @@ const std::string FileManager::BrowseForFolder(const std::string& title, const s
     HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_INPROC, IID_PPV_ARGS(&pfod));
     if(SUCCEEDED(hr))
     {
-        pfod->SetTitle(framework::MakeUTF16String(title).c_str());
+        pfod->SetTitle(framework::MakeUtf16String(title).c_str());
         if(folder.empty() == false)
         {
             IShellItem* psi = nullptr;
-            hr = SHCreateItemFromParsingName(framework::MakeUTF16String(folder).c_str(), nullptr, IID_PPV_ARGS(&psi));
+            hr = SHCreateItemFromParsingName(framework::MakeUtf16String(folder).c_str(), nullptr, IID_PPV_ARGS(&psi));
             if(SUCCEEDED(hr))
             {
                 pfod->SetFolder(psi);
@@ -202,7 +202,7 @@ const std::string FileManager::BrowseForFolder(const std::string& title, const s
                     hr = psi->GetDisplayName(SIGDN_FILESYSPATH, &fileSystemPath);
                     if(SUCCEEDED(hr) && (nullptr != fileSystemPath))
                     {
-                        path = framework::MakeUTF8String(fileSystemPath);
+                        path = framework::MakeUtf8String(fileSystemPath);
                         CoTaskMemFree(fileSystemPath);
                     }
 
@@ -219,7 +219,7 @@ const std::string FileManager::BrowseForFolder(const std::string& title, const s
     return path;
 }
 
-const std::string FileManager::AppendPath(const std::string& prefix, const std::string& append)
+std::string FileManager::AppendPath(const std::string& prefix, const std::string& append)
 {
 #ifndef WIN32 
     return prefix + '/' + append;
@@ -228,7 +228,7 @@ const std::string FileManager::AppendPath(const std::string& prefix, const std::
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::UserHomeDirectory()
+std::string FileManager::UserHomeDirectory()
 {
     std::string directory;
 
@@ -241,7 +241,7 @@ const std::string FileManager::UserHomeDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::UserApplicationSupportDirectory()
+std::string FileManager::UserApplicationSupportDirectory()
 {
     std::string directory;
 
@@ -255,7 +255,7 @@ const std::string FileManager::UserApplicationSupportDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::SystemApplicationSupportDirectory()
+std::string FileManager::SystemApplicationSupportDirectory()
 {
     std::string directory;
 
@@ -269,7 +269,7 @@ const std::string FileManager::SystemApplicationSupportDirectory()
 #endif // #ifndef WIN32
 }
 
-const std::string FileManager::ProgramFilesDirectory()
+std::string FileManager::ProgramFilesDirectory()
 {
     std::string directory;
 
@@ -278,7 +278,7 @@ const std::string FileManager::ProgramFilesDirectory()
     HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramFilesX64, 0, 0, &unicodeString);
     if(SUCCEEDED(hr))
     {
-        directory = framework::MakeUTF8String(unicodeString);
+        directory = framework::MakeUtf8String(unicodeString);
         CoTaskMemFree(unicodeString);
     }
 #else
@@ -288,7 +288,7 @@ const std::string FileManager::ProgramFilesDirectory()
     return directory;
     }
 
-const std::string FileManager::RoamingAppDataDirectory()
+std::string FileManager::RoamingAppDataDirectory()
 {
     std::string directory;
 
@@ -297,7 +297,7 @@ const std::string FileManager::RoamingAppDataDirectory()
     HRESULT hr = SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, 0, &unicodeString);
     if(SUCCEEDED(hr))
     {
-        directory = framework::MakeUTF8String(unicodeString);
+        directory = framework::MakeUtf8String(unicodeString);
         CoTaskMemFree(unicodeString);
     }
 #else
@@ -307,7 +307,7 @@ const std::string FileManager::RoamingAppDataDirectory()
     return directory;
     }
 
-const bool FileManager::FileExists(const std::string& path)
+bool FileManager::FileExists(const std::string& path)
 {
     bool fileExists = false;
 
@@ -326,7 +326,7 @@ const bool FileManager::FileExists(const std::string& path)
     return fileExists;
 }
 
-const std::vector<std::string> FileManager::ReadFile(const std::string& filename)
+std::vector<std::string> FileManager::ReadFile(const std::string& filename)
 {
     std::vector<std::string> lines;
 
