@@ -52,26 +52,52 @@ const ServiceStatus SaveChaptersToProjectAction::Execute()
       if(path.empty() == false)
       {
          std::ofstream output(path, std::ios::out);
-         for(size_t i = 0; i < chapterMarkers.size(); i++)
-         {
-            const std::string timestamp = application.TimestampToString(chapterMarkers[i].Position());
-            const std::string entry = timestamp + " " + chapterMarkers[i].Name();
-            output << entry << std::endl;
-         }
+		 if(output.is_open() == true)
+		 {
+			 for(size_t i = 0; i < chapterMarkers.size(); i++)
+			 {
+				 const std::string timestamp = application.TimestampToString(chapterMarkers[i].Position());
+				 const std::string entry = timestamp + " " + chapterMarkers[i].Name();
+				 output << entry << std::endl;
+				 if(output.fail() == false)
+				 {
+					 status = SERVICE_SUCCESS;
+				 }
+				 else
+				 {
+					 status = SERVICE_FAILURE;
+					 break;
+				 }
+			 }
 
-         output.close();
-         
-         status = SERVICE_SUCCESS;
-         NotificationWindow::Show(successMessageId_);
+			 output.close();
+		 }
+		 else
+		 {
+			 status = SERVICE_FAILURE;
+		 }
+
+		 const size_t MAX_MESSAGE_SIZE = 1024;
+		 char message[MAX_MESSAGE_SIZE + 1] = {0};
+		 if(SERVICE_SUCCESS == status)
+		 {
+			 sprintf_s(message, "The chapter markers have been saved successfully.\r\n\r\n(%s)", path.c_str());
+			 NotificationWindow::Show(message);
+		 }
+		 else
+		 {
+			 sprintf_s(message, "The chapter markers could not be saved.\r\n\r\n(%s)", path.c_str());
+			 NotificationWindow::Show(message, true);
+		 }
       }
       else
       {
-         NotificationWindow::Show(noProjectNameMessageId_);
+         NotificationWindow::Show(noProjectNameMessageId_, true);
       }
    }
    else
    {
-      NotificationWindow::Show(notFoundMessageId_);
+      NotificationWindow::Show(notFoundMessageId_, true);
    }
    
    return status;

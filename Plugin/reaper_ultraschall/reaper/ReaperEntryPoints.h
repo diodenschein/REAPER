@@ -45,6 +45,7 @@
 #define REAPERAPI_WANT_EnumProjectMarkers
 #define REAPERAPI_WANT_AddProjectMarker2
 #define REAPERAPI_WANT_DeleteProjectMarker
+
 namespace reaper_api {
 #include <reaper_plugin_functions.h>
 }
@@ -58,6 +59,12 @@ public:
    
 private:
    ReaperEntryPoints(reaper_plugin_info_t* pPluginInfo);
+};
+
+class Reaper
+{
+public:
+
 };
 
 }}

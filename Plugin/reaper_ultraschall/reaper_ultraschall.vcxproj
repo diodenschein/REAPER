@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="framework\BinaryFileReader.cpp" />
     <ClCompile Include="framework\ChapterMarker.cpp" />
+    <ClCompile Include="framework\FileUtilities.cpp" />
     <ClCompile Include="framework\Malloc.cpp" />
     <ClCompile Include="framework\ResourceId.cpp" />
     <ClCompile Include="framework\ResourceManager.cpp" />
@@ -197,7 +198,6 @@
     <ClCompile Include="reaper\StudioLinkVersionCheck.cpp" />
     <ClCompile Include="reaper\SWSVersionCheck.cpp" />
     <ClCompile Include="reaper\ThemeVersionCheck.cpp" />
-    <ClCompile Include="reaper\UnsupportedPlatformException.cpp" />
     <ClCompile Include="reaper\UpdateCheckAction.cpp" />
     <ClCompile Include="reaper\VersionHandler.cpp" />
     <ClCompile Include="reaper\VersionString.cpp" />
@@ -205,6 +205,7 @@
   <ItemGroup>
     <ClInclude Include="framework\BinaryFileReader.h" />
     <ClInclude Include="framework\ChapterMarker.h" />
+    <ClInclude Include="framework\FileUtilities.h" />
     <ClInclude Include="framework\Framework.h" />
     <ClInclude Include="framework\IActivationService.h" />
     <ClInclude Include="framework\IApplication.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="framework\SharedObjectFactory.h" />
     <ClInclude Include="framework\SharedObjectManager.h" />
     <ClInclude Include="framework\Stream.h" />
+    <ClInclude Include="framework\StringDefs.h" />
     <ClInclude Include="framework\StringUtilities.h" />
     <ClInclude Include="framework\TextFileReader.h" />
     <ClInclude Include="framework\TextFileWriter.h" />
@@ -245,7 +247,6 @@
     <ClInclude Include="reaper\StudioLinkVersionCheck.h" />
     <ClInclude Include="reaper\SWSVersionCheck.h" />
     <ClInclude Include="reaper\ThemeVersionCheck.h" />
-    <ClInclude Include="reaper\UnsupportedPlatformException.h" />
     <ClInclude Include="reaper\UpdateCheckAction.h" />
     <ClInclude Include="reaper\VersionHandler.h" />
     <ClInclude Include="reaper\VersionString.h" />
