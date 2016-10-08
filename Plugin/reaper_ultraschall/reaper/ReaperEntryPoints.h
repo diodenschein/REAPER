@@ -45,6 +45,7 @@
 #define REAPERAPI_WANT_EnumProjectMarkers
 #define REAPERAPI_WANT_AddProjectMarker2
 #define REAPERAPI_WANT_DeleteProjectMarker
+
 namespace reaper_api {
 #include <reaper_plugin_functions.h>
 }

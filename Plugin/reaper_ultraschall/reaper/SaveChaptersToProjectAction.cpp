@@ -139,7 +139,7 @@ ServiceStatus SaveChaptersToProjectAction::Execute()
    return status;
 }
 
-const std::string SaveChaptersToProjectAction::Path()
+std::string SaveChaptersToProjectAction::Path()
 {
    std::string path;
 

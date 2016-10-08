@@ -55,7 +55,6 @@ namespace ultraschall {
             static std::vector<std::string> ReadFile(const std::string& filename);
 
             static std::string ReadVersionFromFile(const std::string& path);
-        private:
         };
 
     }

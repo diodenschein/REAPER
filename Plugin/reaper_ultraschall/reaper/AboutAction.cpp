@@ -26,8 +26,6 @@
 #include <vector>
 #include <fstream>
 
-#include <cpr/cpr.h>
-
 #ifndef _WIN32
 #include <libxml/tree.h>
 #include <libxml/parser.h>
@@ -37,10 +35,9 @@
 
 #include "ReaperVersionCheck.h"
 #include "ThemeVersionCheck.h"
-#include "HubVersionCheck.h"
+#include "VersionHandler.h"
 #include "SoundboardVersionCheck.h"
 #include "StudioLinkVersionCheck.h"
-#include "PluginVersionCheck.h"
 #include "SWSVersionCheck.h"
 #include "AboutAction.h"
 #include "NotificationWindow.h"
@@ -127,7 +124,7 @@ REAPER ";
    message2 += QueryRawReaperVersion();
    message2 += "\r\n";
 
-   NotificationWindow::Show("About Ultraschall 2.3 PRE-RELEASE-1 \"Gropius\"...", message1 + message2);
+   NotificationWindow::Show("About Ultraschall 2.2.3 \"Gropius\"...", message1 + message2);
 
    return SERVICE_SUCCESS;
 }

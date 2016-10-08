@@ -10,6 +10,11 @@
 * **Hub [Mac only]:** Our project to replace [Soundflower](https://github.com/mattingalls/Soundflower/releases/tag/2.0b2), and to provide a stable, crackle-free podcasting experience.
 * **Misc:** Anything that is left.
 
+## 2.2.3 Gropius - 2016-August-25
+
+* Soundboard: **Bugfix**
+*Fixed a bug where the soundboard would not pause playback when triggered with OSC. Thanks to Bastian Boessl for reporting tis bug.*
+
 ## 2.2.2 Gropius - 2016-August-14
 
 * Soundboard [Mac]: **Bugfix**

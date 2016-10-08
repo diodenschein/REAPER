@@ -27,10 +27,9 @@
 #include <vector>
 #include <fstream>
 
-#include <cpr/cpr.h>
-
 #include <Framework.h>
 #include <StringUtilities.h>
+#include "VersionHandler.h"
 
 #ifndef WIN32
 #include <libxml/tree.h>
